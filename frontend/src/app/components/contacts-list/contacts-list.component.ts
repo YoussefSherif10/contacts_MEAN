@@ -7,16 +7,7 @@ import {NavigateUserService} from "../../services/navigate-user.service";
   styleUrls: ['./contacts-list.component.css']
 })
 export class ContactsListComponent {
-  userName: string;
 
-  constructor(private  navUser: NavigateUserService) {
-    this.navUser.checkLogin();
-
-    const base64Url = localStorage.getItem('token')?.split('.')[1];
-    const base64 = base64Url?.replace('-', '+').replace('_', '/');
-    // @ts-ignore
-    this.userName = JSON.parse(window.atob(base64)).name;
-  }
 
 
 }

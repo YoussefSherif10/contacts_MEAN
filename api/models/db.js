@@ -37,3 +37,4 @@ process.once('SIGINT', () => {
 })
 
 require('./users');
+require('./contacts');
