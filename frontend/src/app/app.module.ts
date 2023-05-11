@@ -7,12 +7,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import {AppRoutingModule} from "./app-routing/app-routing.module";
+import { ContactsListComponent } from './components/contacts-list/contacts-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ContactsListComponent
   ],
   imports: [
     BrowserModule,

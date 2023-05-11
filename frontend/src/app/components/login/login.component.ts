@@ -2,6 +2,7 @@ import {Component, OnDestroy} from '@angular/core';
 import {UserModel} from "../../models/user.model";
 import {Subscription} from "rxjs";
 import {DataService} from "../../services/data.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnDestroy {
   subscription!: Subscription;
   errorMsg!: string;
 
-  constructor(private data: DataService) {
+  constructor(private data: DataService, private router: Router) {
   }
 
   resetAndHide() {
@@ -32,6 +33,7 @@ export class LoginComponent implements OnDestroy {
     if (this.formIsValid()) {
       this.subscription = this.data.login(this.user).subscribe(token => {
         localStorage.setItem("token", token);
+        this.router.navigate(["/"]);
       }, error => {
         this.errorMsg = error.error.msg;
       })
