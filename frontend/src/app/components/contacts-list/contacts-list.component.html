@@ -37,8 +37,9 @@
 
   </form>
 
-  <div class="d-flex flex-wrap justify-content-around col-11 p-2 mb-3">
-    <app-contact-item *ngFor="let contact of contacts" [contact]="contact" (handleDelete)="deleteContact($event)"></app-contact-item>
+  <div class="container">
+    <app-contact-item *ngFor="let contact of contacts; let i = index" class="item{{i+1}}" [contact]="contact" (handleDelete)="deleteContact($event)"></app-contact-item>
   </div>
 
 </div>
+<!--d-flex flex-wrap justify-content-around col-11 p-2 mb-3-->
