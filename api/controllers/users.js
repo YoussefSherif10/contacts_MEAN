@@ -10,15 +10,12 @@ const login = async (req, res) => {
     try {
         user = await User.findOne({name: req.body.name}).exec();
 
-        try {
-            const token = jwt.sign({
-                name: req.body.name
-            }, "ThisIsSecret")
+        const token = jwt.sign({
+            name: user.name
+        }, "ThisIsSecret")
 
-            res.status(200).json(token);
-        }catch {
-            res.status(500).json({msg: "Something went wrong"});
-        }
+        res.status(200).json(token);
+
     } catch {
         res.status(404).json({msg: "User not found"});
     }
