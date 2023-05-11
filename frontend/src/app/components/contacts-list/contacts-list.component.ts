@@ -20,6 +20,8 @@ export class ContactsListComponent implements OnInit, OnDestroy {
   showForm: boolean = false;
   alertForm: boolean = false;
   contacts!: ContactModel[];
+  pages!: number[];
+  currentPage: number = 1;
   getSubscription!: Subscription;
   addSubscription!: Subscription;
   deleteSubscription!: Subscription;
@@ -36,8 +38,9 @@ export class ContactsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getSubscription = this.data.getContacts().subscribe(res => {
-      this.contacts = res;
+    this.getSubscription = this.data.getContacts(0).subscribe(res => {
+      this.contacts = res.contacts;
+      this.pages = Array(res.pages).fill(0).map((x,i)=>i);
     })
   }
 
@@ -59,6 +62,14 @@ export class ContactsListComponent implements OnInit, OnDestroy {
     this.deleteSubscription = this.data.deleteContact(id).subscribe(res => {
       const index = this.contacts.findIndex(c => c._id === id);
       this.contacts.splice(index, 1);
+    })
+  }
+
+  onClick(currentPage: number) {
+    this.currentPage = currentPage;
+    this.getSubscription = this.data.getContacts((currentPage - 1) * 5).subscribe(res => {
+      this.contacts = res.contacts;
+      this.pages = Array(res.pages).fill(0).map((x,i)=>i);
     })
   }
 

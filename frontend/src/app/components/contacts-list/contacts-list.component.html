@@ -1,4 +1,4 @@
-<div class="card col-11 mt-3">
+<div class="card col-11 mt-3 mb-3">
   <div class="card-title p-2">
     <button class="btn btn-primary float-end" (click)="showForm =! showForm">Add review</button>
   </div>
@@ -37,9 +37,13 @@
 
   </form>
 
-  <div class="container">
-    <app-contact-item *ngFor="let contact of contacts; let i = index" class="item{{i+1}}" [contact]="contact" (handleDelete)="deleteContact($event)"></app-contact-item>
+  <div class="parent col-12 p-2 mb-2">
+    <app-contact-item *ngFor="let contact of contacts; let i = index" class="div{{i+1}}" [contact]="contact" (handleDelete)="deleteContact($event)"></app-contact-item>
   </div>
 
+  <div class="d-flex flex-wrap col-12 justify-content-center mb-2">
+    <ul class="pagination">
+      <li class="page-item" [class.active]="currentPage == page+1" *ngFor="let page of pages" (click)="onClick(page+1)"><button class="page-link">{{page+1}}</button></li>
+    </ul>
+  </div>
 </div>
-<!--d-flex flex-wrap justify-content-around col-11 p-2 mb-3-->

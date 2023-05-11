@@ -20,8 +20,8 @@ export class DataService {
     return this.http.post<ContactModel>(`${apiUrl}/contacts`, contact);
   }
 
-  getContacts(): Observable<ContactModel[]> {
-    return this.http.get<ContactModel[]>(`${apiUrl}/contacts`);
+  getContacts(skip: number): Observable<any> {
+    return this.http.get<any>(`${apiUrl}/contacts?skip=${skip}`);
   }
 
   deleteContact(id: string): Observable<any> {
