@@ -5,9 +5,11 @@ import {LoginComponent} from "../components/login/login.component";
 import {PageNotFoundComponent} from "../components/page-not-found/page-not-found.component";
 import {ContactsListComponent} from "../components/contacts-list/contacts-list.component";
 import {HomePageComponent} from "../components/home-page/home-page.component";
+import {EditFormComponent} from "../components/edit-form/edit-form.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
+  {path: 'contacts/:contactId', component: EditFormComponent},
   {path: '', component: HomePageComponent},
   {path: '**', component: PageNotFoundComponent}
 ]

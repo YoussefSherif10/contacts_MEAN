@@ -9,6 +9,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import {AppRoutingModule} from "./app-routing/app-routing.module";
 import { ContactsListComponent } from './components/contacts-list/contacts-list.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
+import { ContactItemComponent } from './components/contact-item/contact-item.component';
+import { EditFormComponent } from './components/edit-form/edit-form.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { HomePageComponent } from './components/home-page/home-page.component';
     LoginComponent,
     PageNotFoundComponent,
     ContactsListComponent,
-    HomePageComponent
+    HomePageComponent,
+    ContactItemComponent,
+    EditFormComponent
   ],
   imports: [
     BrowserModule,

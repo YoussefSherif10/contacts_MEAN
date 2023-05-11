@@ -9,7 +9,8 @@ import {NavigateUserService} from "../../services/navigate-user.service";
 export class HomePageComponent {
   userName: string;
 
-  constructor(private  navUser: NavigateUserService) {
+
+  constructor(private  navUser: NavigateUserService, ) {
     this.navUser.checkLogin();
 
     const base64Url = localStorage.getItem('token')?.split('.')[1];
@@ -17,4 +18,6 @@ export class HomePageComponent {
     // @ts-ignore
     this.userName = JSON.parse(window.atob(base64)).name;
   }
+
+
 }

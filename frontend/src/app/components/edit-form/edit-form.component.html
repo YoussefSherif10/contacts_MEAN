@@ -1,16 +1,14 @@
-<div class="card col-11 mt-3">
-  <div class="card-title p-2">
-    <button class="btn btn-primary float-end" (click)="showForm =! showForm">Add review</button>
-  </div>
-
-  <form (ngSubmit)="addContact()" *ngIf="showForm" class="p-2">
+<div class="d-flex flex-column align-items-center mt-3">
+  <form (ngSubmit)="editContact()" class="col-12 col-md-8 border border-primary rounded shadow p-3 mb-5 bg-white p-2">
+    <h1 class="display-1">Edit Contact</h1>
     <div class="alert alert-danger" role="alert" *ngIf="alertForm">
       Name and phone are required fields
     </div>
 
     <div class="form-group mt-2">
       <label for="name">Name</label>
-      <input [(ngModel)]="newContact.name" type="text" class="form-control" id="name" name="name" placeholder="Enter Name"
+      <input [(ngModel)]="newContact.name" type="text" class="form-control" id="name" name="name"
+             placeholder="Enter Name"
              required>
     </div>
 
@@ -32,13 +30,7 @@
                 placeholder="Enter Notes" required></textarea>
     </div>
 
-    <button class="btn btn-danger mt-2" (click)="showForm = !showForm">Cancel</button> &nbsp;
-    <button type="submit" class="btn btn-primary mt-2 float-end">Add</button>
+    <button type="submit" class="btn btn-primary mt-2 float-end">Edit</button>
 
   </form>
-
-  <div class="d-flex flex-wrap justify-content-around col-11 p-2 mb-3">
-    <app-contact-item *ngFor="let contact of contacts" [contact]="contact" (handleDelete)="deleteContact($event)"></app-contact-item>
-  </div>
-
 </div>

@@ -20,11 +20,6 @@ export class LoginComponent implements OnDestroy {
   constructor(private data: DataService, private router: Router) {
   }
 
-  resetAndHide() {
-    this.user.name = '';
-    this.user.password = '';
-  }
-
   formIsValid() {
     return !!(this.user.name && this.user.password);
   }
