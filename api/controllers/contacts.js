@@ -42,7 +42,15 @@ const deleteContact = (req, res) => {
 
 const editContact = async (req, res) => {
     try {
-        let contact = await Contact.findByIdAndUpdate(req.params.contactId, req.body, {new: true})
+        const token = req.headers.authorization.split(' ')[1];
+        name = jwt.verify(token, "ThisIsSecret").name;
+        let contact = await Contact.findByIdAndUpdate(req.params.contactId, {
+            name: req.body.name,
+            phone: req.body.phone,
+            address: req.body.address,
+            notes: req.body.notes,
+            editedBy: name
+        }, {new: true})
         res.status(200).json(contact);
     } catch {
         res.status(500).json({msg: "Something went wrong"});

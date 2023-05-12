@@ -16,31 +16,73 @@ export class ContactsListComponent implements OnInit, OnDestroy {
     phone: '',
     address: '',
     notes: '',
+    editedBy: ''
   };
   showForm: boolean = false;
   alertForm: boolean = false;
   contacts!: ContactModel[];
   pages!: number[];
   currentPage: number = 1;
+  name!: string;
   getSubscription!: Subscription;
   addSubscription!: Subscription;
   deleteSubscription!: Subscription;
   editSubscription!: Subscription;
 
   constructor(private data: DataService, private edit: EditEmitService) {
+    const token = localStorage.getItem("token");
+
+    const base64Url = token?.split('.')[1];
+    const base64 = base64Url?.replace('-', '+').replace('_', '/');
+    // @ts-ignore
+    this.name = JSON.parse(window.atob(base64)).name;
+
+
     this.editSubscription = this.edit.getMessage().subscribe(msg => {
-      if (msg.event === 'edit'){
-        this.data.editContact(msg.id, msg.contact);
+      if (msg.event === 'edit') {
+        // @ts-ignore
+        this.data.editContact(msg.id, msg.contact, token);
         const index = this.contacts.findIndex(c => c._id == msg.id);
         this.contacts.splice(index, 1, msg.contact);
       }
     })
+
+    setInterval(() => {
+      this.data.getContacts((this.currentPage - 1) * 5).subscribe(res => {
+        const editedContact = res.contacts.findIndex((c: ContactModel) => (c.editedBy !== this.name && c.editedBy));
+        if (editedContact !== -1){
+          console.log(editedContact);
+          const edited: ContactModel= {
+            name: "locked",
+            phone: "locked",
+            address: "locked",
+            notes: "locked",
+            _id: "locked",
+            editedBy: "locked",
+          }
+          this.contacts.splice(editedContact, 1, edited);
+        }
+      })
+    }, 120000); // 2 minutes
   }
 
   ngOnInit() {
     this.getSubscription = this.data.getContacts(0).subscribe(res => {
       this.contacts = res.contacts;
-      this.pages = Array(res.pages).fill(0).map((x,i)=>i);
+      this.pages = Array(res.pages).fill(0).map((x, i) => i);
+      const editedContact = res.contacts.findIndex((c: ContactModel) => (c.editedBy !== this.name && c.editedBy));
+      if (editedContact !== -1) {
+        console.log(editedContact);
+        const edited: ContactModel = {
+          name: "locked",
+          phone: "locked",
+          address: "locked",
+          notes: "locked",
+          _id: "locked",
+          editedBy: "locked",
+        }
+        this.contacts.splice(editedContact, 1, edited);
+      }
     })
   }
 
@@ -69,14 +111,27 @@ export class ContactsListComponent implements OnInit, OnDestroy {
     this.currentPage = currentPage;
     this.getSubscription = this.data.getContacts((currentPage - 1) * 5).subscribe(res => {
       this.contacts = res.contacts;
-      this.pages = Array(res.pages).fill(0).map((x,i)=>i);
+      this.pages = Array(res.pages).fill(0).map((x, i) => i);
+      const editedContact = res.contacts.findIndex((c: ContactModel) => (c.editedBy !== this.name && c.editedBy));
+      if (editedContact !== -1) {
+        console.log(editedContact);
+        const edited: ContactModel = {
+          name: "locked",
+          phone: "locked",
+          address: "locked",
+          notes: "locked",
+          _id: "locked",
+          editedBy: "locked",
+        }
+        this.contacts.splice(editedContact, 1, edited);
+      }
     })
   }
 
   ngOnDestroy() {
     if (this.addSubscription)
       this.addSubscription.unsubscribe();
-    if  (this.getSubscription)
+    if (this.getSubscription)
       this.getSubscription.unsubscribe();
     if (this.deleteSubscription)
       this.deleteSubscription.unsubscribe();

@@ -17,7 +17,8 @@ export class EditFormComponent implements OnInit {
     name: '',
     phone: '',
     address: '',
-    notes: ''
+    notes: '',
+    editedBy: ''
   };
   alertForm: boolean = false;
 

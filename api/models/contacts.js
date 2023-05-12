@@ -12,6 +12,7 @@ const contactSchema = mongoose.Schema({
     },
     address: String,
     notes: String,
+    editedBy: String
 });
 
 mongoose.model('Contact', contactSchema);

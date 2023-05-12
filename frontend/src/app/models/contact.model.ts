@@ -4,4 +4,5 @@ export interface ContactModel {
   phone: string,
   address: string,
   notes: string,
+  editedBy: string
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {UserModel} from "../models/user.model";
 import {Observable} from "rxjs";
 import {ContactModel} from "../models/contact.model";
@@ -28,7 +28,9 @@ export class DataService {
     return this.http.delete(`${apiUrl}/contacts/${id}`);
   }
 
-  editContact(id: string, contact: ContactModel): void {
-    this.http.put<ContactModel>(`${apiUrl}/contacts/${id}`, contact).subscribe();
+  editContact(id: string, contact: ContactModel, token: string): void {
+    const headers = new HttpHeaders()
+      .set("Authorization", `Bearer ${token}`)
+    this.http.put<ContactModel>(`${apiUrl}/contacts/${id}`, contact, {headers: headers}).subscribe();
   }
 }
