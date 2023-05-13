@@ -50,18 +50,8 @@ export class ContactsListComponent implements OnInit, OnDestroy {
     setInterval(() => {
       this.data.getContacts((this.currentPage - 1) * 5).subscribe(res => {
         const editedContact = res.contacts.findIndex((c: ContactModel) => (c.editedBy !== this.name && c.editedBy));
-        if (editedContact !== -1){
-          console.log(editedContact);
-          const edited: ContactModel= {
-            name: "locked",
-            phone: "locked",
-            address: "locked",
-            notes: "locked",
-            _id: "locked",
-            editedBy: "locked",
-          }
-          this.contacts.splice(editedContact, 1, edited);
-        }
+        if (editedContact !== -1)
+          this.showLocked(editedContact);
       })
     }, 120000); // 2 minutes
   }
@@ -71,18 +61,8 @@ export class ContactsListComponent implements OnInit, OnDestroy {
       this.contacts = res.contacts;
       this.pages = Array(res.pages).fill(0).map((x, i) => i);
       const editedContact = res.contacts.findIndex((c: ContactModel) => (c.editedBy !== this.name && c.editedBy));
-      if (editedContact !== -1) {
-        console.log(editedContact);
-        const edited: ContactModel = {
-          name: "locked",
-          phone: "locked",
-          address: "locked",
-          notes: "locked",
-          _id: "locked",
-          editedBy: "locked",
-        }
-        this.contacts.splice(editedContact, 1, edited);
-      }
+      if (editedContact !== -1)
+        this.showLocked(editedContact);
     })
   }
 
@@ -113,19 +93,21 @@ export class ContactsListComponent implements OnInit, OnDestroy {
       this.contacts = res.contacts;
       this.pages = Array(res.pages).fill(0).map((x, i) => i);
       const editedContact = res.contacts.findIndex((c: ContactModel) => (c.editedBy !== this.name && c.editedBy));
-      if (editedContact !== -1) {
-        console.log(editedContact);
-        const edited: ContactModel = {
-          name: "locked",
-          phone: "locked",
-          address: "locked",
-          notes: "locked",
-          _id: "locked",
-          editedBy: "locked",
-        }
-        this.contacts.splice(editedContact, 1, edited);
-      }
+      if (editedContact !== -1)
+        this.showLocked(editedContact);
     })
+  }
+
+  showLocked(editedContact: number) {
+    const edited: ContactModel = {
+      name: "locked",
+      phone: "locked",
+      address: "locked",
+      notes: "locked",
+      _id: "locked",
+      editedBy: "locked",
+    }
+    this.contacts.splice(editedContact, 1, edited);
   }
 
   ngOnDestroy() {
